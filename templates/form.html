@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<!--From https://codepen.io/frytyler/pen/EGdtg-->
+
+<head>
+  <meta charset="UTF-8">
+  <title>Titanic Survival Predictor</title>
+
+</head>
+
+<body>
+  <div class="login">
+    <h1>Predict Your Fate</h1>
+    <p>
+       Find out if you will survive the Titanic Disaster!
+    </p>
+
+    <form action="/predict" method="post">
+      <input type="text" name="Name" placeholder="Name" required="required" />
+      <input type="text" name="Sex" placeholder="Sex" required="required" />
+      <input type="text" name="Pclass" placeholder="Pclass" required="required" />
+      <input type="text" name="SibSp" placeholder="SibSp" required="required" />
+      <input type="text" name="Cabin" placeholder="Cabin" required="required" />
+
+      <button type="submit" class="btn btn-primary btn-block btn-large">Predict</button>
+    </form>
+    <h3>{{ '' if not input else 'Input' }}</h3>
+    <ul>
+    {% for key, value in input.items() %}
+        <li>{{key}} : {{value}}</li>
+    {% endfor %}
+    </ul>
+    <br>
+    {{ prediction_text }}
+    <br />
+    <h3>Instructions</h3>
+    <p>
+      To get a prediction, fill in all fields and then press predict.
+      <ul>
+        <li>
+          Make sure that your name contains some prefix like Mr., Mrs., Jonkheer. etc,
+          as found in the Titanic data: {'Rev.', 'Mme.', 'Miss.', 'Dona.', 'Lady.', 'Sir.', 'Don.',
+          'Countess.', 'Jonkheer.', 'Major.', 'Col.', 'Ms.', 'Master.', 'Dr.', 'Mr.', 'Mrs.', 'Mlle.', 'Capt.'}.
+        </li>
+        <li>
+          Sex can be either [male, female].
+        </li>
+        <li>
+          Pclass can be [1, 2, 3] and refers to the class of the ticket.
+        </li>
+        <li>
+          SibSp refers to the amount of siblings / spouses aboard the Titanic. So any positive whole number will do.
+        </li>
+        <li>
+          Finally, Cabin can be any combination of a letter [A-G, T] plus number. For example C85. The number isn't used in this model though, only the letter,
+          which refers to the Deck.
+        </li>
+      </ul>
+    </p>
+    <p>
+       Please note that this is a rather simple model based on a limited amount of features from an already limited amount of data (891 rows). AUC ROC score
+       (a special accuracy metric for unbalanced data ranging from 0.5-1 with 1 being perfect) of the model is 0.83, which is quite decent but not perfect. It's quite possible
+       for the model to make wrong predictions for genuine passenger data.
+    </p>
+
+
+  </div>
+
+
+</body>
+
+</html>
